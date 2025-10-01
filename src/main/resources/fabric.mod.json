@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "id": "notenoughponies",
+  "version": "${version}",
+  "name": "Not Enough Ponies",
+  "description": "Replaces default pony skins and adds unique pony villagers.",
+  "authors": [
+    "Kinoman"
+  ],
+  "license": "MIT",
+  "icon": "assets/notenoughponies/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "com.neponies.NotEnoughPonies"
+    ],
+    "client": [
+      "com.neponies.NotEnoughPoniesClient"
+    ],
+    "cardinal-components-entity": [
+      "com.neponies.PonyComponentInitializer"
+    ]
+  },
+  "custom": {
+    "cardinal-components": [
+      "notenoughponies:pony_data"
+    ]
+  },
+
+  "mixins": [
+    "notenoughponies.mixins.json",
+    "notenoughponies.client.mixins.json"
+  ],
+  "depends": {
+    "minecraft": "~1.20.1"
+  },
+  "accessWidener": "neponies.aw"
+}
