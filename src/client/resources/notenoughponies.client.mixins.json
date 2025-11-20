@@ -10,7 +10,10 @@
 		"PonyConfigMixin",
 		"EntityMixin",
 		"ElytraFeatureMixin",
-		"VillagerPonyRendererMixin"
+		"VillagerPonyRendererMixin",
+		"ConfigAccessor",
+		"CreatureMixin",
+		"VillagerEntityClientMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1

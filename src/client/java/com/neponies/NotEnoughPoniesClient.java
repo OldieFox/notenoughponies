@@ -1,7 +1,5 @@
 package com.neponies;
 
-import com.minelittlepony.api.config.PonyConfig;
-import com.minelittlepony.common.util.settings.Setting;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
@@ -23,7 +21,7 @@ public class NotEnoughPoniesClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
 
-
+        com.neponies.client.ClientPonyConfigImpl.init();
 
         // Register villager sounds
         VillagerSounds.registerVillagerSounds();

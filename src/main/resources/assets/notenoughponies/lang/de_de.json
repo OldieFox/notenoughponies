@@ -1,5 +1,6 @@
 {
   "minelp.options.ponycustomnamesenabled": "Pony-Namen",
   "minelp.options.professioninponycustomnames": "Beruf anzeigen",
-  "minelp.options.replacevillagersounds": "Dorfbewohner-Pony-Geräusche"
+  "minelp.options.replacevillagersounds": "Dorfbewohner-Pony-Geräusche",
+  "minelp.options.ponyvillagerambientsoundsenabled": "Pony-Umgebungsgeräusche"
 }

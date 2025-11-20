@@ -1,5 +1,6 @@
 {
   "minelp.options.ponycustomnamesenabled": "Noms des poneys",
   "minelp.options.professioninponycustomnames": "Afficher la profession",
-  "minelp.options.replacevillagersounds": "Sons de poney des villageois"
+  "minelp.options.replacevillagersounds": "Sons de poney des villageois",
+  "minelp.options.ponyvillagerambientsoundsenabled": "Sons ambiants des poneys"
 }

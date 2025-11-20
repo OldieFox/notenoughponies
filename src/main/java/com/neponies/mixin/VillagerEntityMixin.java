@@ -1,13 +1,8 @@
-// --- Changed File ---
-
 package com.neponies.mixin;
 
 import com.minelittlepony.api.pony.meta.Race;
-import com.neponies.PonyComponent;
-import com.neponies.PonyComponentInitializer;
-import com.neponies.PonyNames;
-import com.neponies.VillagerCustomPonyData;
-import com.neponies.VillagerPonyEntityAccessor;
+import com.neponies.*;
+import com.neponies.util.PonyConfigBridge;
 import dev.onyxstudios.cca.api.v3.component.ComponentKey;
 import net.minecraft.entity.EntityData;
 import net.minecraft.entity.EntityType;
@@ -30,8 +25,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.UUID;
-
-import static com.neponies.NEPoniesConfig.*;
 import static com.neponies.VillagerCustomPonyData.PONIES_SKINS_COUNT;
 
 @Mixin(VillagerEntity.class)
@@ -40,10 +33,8 @@ public abstract class VillagerEntityMixin extends MerchantEntity implements Vill
     @Unique
     private Text ponyCustomName;
 
-
     @Shadow
     public abstract VillagerData getVillagerData();
-
 
     @Unique
     private static VillagerEntity parentVillager1;
@@ -68,6 +59,7 @@ public abstract class VillagerEntityMixin extends MerchantEntity implements Vill
     public VillagerEntityMixin(EntityType<? extends MerchantEntity> type, World world) {
         super(type, world);
     }
+
 
     @Unique
     @Override
@@ -103,21 +95,23 @@ public abstract class VillagerEntityMixin extends MerchantEntity implements Vill
     @Unique
     @Override
     public boolean canShowProfessionName() {
-        if (!isProfessionInPonyCustomNamesEnabled.get() || !isPonyVillagerInOriginalModEnabled().get()) return false;
-        Text profession = getProfessionName();
-        return !profession.getString().isEmpty();
+        if (this.getWorld().isClient) {
+            return PonyConfigBridge.CAN_SHOW_PROFESSION.test(this);
+        }
+        return false;
     }
+
     @Unique
     public boolean canShowCustomPonyName() {
-        boolean hasCustomName = (this.dataTracker.get(CUSTOM_NAME)).isPresent();
-        if (!isPonyCustomNamesEnabled.get() || !isPonyVillagerInOriginalModEnabled().get() || hasCustomName) return false;
-        Text name = getPonyCustomName();
-        return name != null && !name.getString().isEmpty();
+        if (this.getWorld().isClient) {
+            return PonyConfigBridge.CAN_SHOW_CUSTOM_NAME.test(this);
+        }
+        return false;
     }
 
     @Unique
     @Override
-    public void setPonyRace(Race race) {
+    public void setPonyRace(NEPRace race) {
         getVillagerCustomData().setRace(race);
         PONY_DATA_KEY.sync(this);
     }
@@ -125,7 +119,7 @@ public abstract class VillagerEntityMixin extends MerchantEntity implements Vill
 
     @Unique
     @Override
-    public Race getPonyRace() {
+    public NEPRace getPonyRace() {
         return getVillagerCustomData().getRace();
     }
     @Unique
@@ -142,7 +136,6 @@ public abstract class VillagerEntityMixin extends MerchantEntity implements Vill
     }
 
     @Override
-    @Unique
     public void checkAndSetRace() {
         if (this.getWorld().isClient) return;
 
@@ -157,20 +150,20 @@ public abstract class VillagerEntityMixin extends MerchantEntity implements Vill
             changed = true;
         }
 
-        Race babyRace = initPonyBaby();
-        Race race = (babyRace != null) ? babyRace : data.getRace();
+        NEPRace babyRace = initPonyBaby();
+        NEPRace race = (babyRace != null) ? babyRace : data.getRace();
 
-        if (race == Race.HUMAN) {
+        if (race == NEPRace.HUMAN) {
             int hash = Math.abs(uuid.hashCode());
             int chance = hash % 100; // 0..99
             if (chance < 25) {
-                race = Race.EARTH;        // 25%
+                race = NEPRace.EARTH;        // 25%
             } else if (chance < 26) {
-                race = Race.ALICORN;      // 1%
+                race = NEPRace.ALICORN;      // 1%
             } else if (chance < 63) {
-                race = Race.PEGASUS;      // 37%
+                race = NEPRace.PEGASUS;      // 37%
             } else {
-                race = Race.UNICORN;      // 37%
+                race = NEPRace.UNICORN;      // 37%
             }
             data.setRace(race);
             changed = true;
@@ -194,9 +187,9 @@ public abstract class VillagerEntityMixin extends MerchantEntity implements Vill
     }
 
     @Unique
-    private Race initPonyBaby() {
+    private NEPRace initPonyBaby() {
         if (parentVillager1 != null && parentVillager2 != null) {
-            Race race = Math.random() < 0.5
+            NEPRace race = Math.random() < 0.5
                     ? ((VillagerPonyEntityAccessor) parentVillager1).getPonyRace()
                     : ((VillagerPonyEntityAccessor) parentVillager2).getPonyRace();
 
@@ -212,15 +205,10 @@ public abstract class VillagerEntityMixin extends MerchantEntity implements Vill
         return null;
     }
 
-    @Unique
     @Override
     public void setOnInitializeListener(Runnable listener) {
         this.onInitializeListener = listener;
     }
-
-    /**
-     * Assign the baby's pony race from parents.
-     */
 
     @Inject(method = "createChild", at = @At("HEAD"))
     private void beforeCreateChild(ServerWorld serverWorld, PassiveEntity passiveEntity, CallbackInfoReturnable<VillagerEntity> cir) {
@@ -258,4 +246,6 @@ public abstract class VillagerEntityMixin extends MerchantEntity implements Vill
         if (str == null || str.isEmpty()) return str;
         return str.substring(0, 1).toUpperCase() + str.substring(1);
     }
+
+
 }

@@ -2,7 +2,6 @@
   "entity.villager.ambient.nep": {
     "subtitle": "subtitles.notenoughponies.villager.ambient",
     "sounds": [
-      "notenoughponies:mob/villager/nep_idle1",
       "notenoughponies:mob/villager/nep_idle2",
       "notenoughponies:mob/villager/nep_idle3"
     ]

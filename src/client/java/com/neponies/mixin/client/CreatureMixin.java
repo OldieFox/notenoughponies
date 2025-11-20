@@ -1,17 +1,14 @@
-package com.neponies.mixin;
+package com.neponies.mixin.client;
 
 
 import com.minelittlepony.unicopia.entity.Creature;
 import com.minelittlepony.unicopia.Race;
 import com.minelittlepony.unicopia.entity.Living;
+import com.neponies.NEPRace;
 import com.neponies.PonyComponentInitializer;
 import com.neponies.VillagerPonyEntityAccessor;
-import net.minecraft.entity.EntityData;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.passive.VillagerEntity;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.world.LocalDifficulty;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
@@ -36,8 +33,8 @@ public abstract class CreatureMixin extends Living<LivingEntity>  {
     private void initOverrideRaceInject(LivingEntity entity, CallbackInfo ci) {
         if (entity instanceof VillagerPonyEntityAccessor villager) {
             villager.setOnInitializeListener(() -> {
-                com.minelittlepony.api.pony.meta.Race mlpRace = villager.getPonyRace();
-                this.overrideRace = convertMlpToUnicopia(mlpRace);
+                NEPRace mlpRace = villager.getPonyRace();
+                this.overrideRace = convertNepRaceToUnicopia(mlpRace);
             });
         }
     }
@@ -56,8 +53,8 @@ public abstract class CreatureMixin extends Living<LivingEntity>  {
                                 }
                             }
 
-                            com.minelittlepony.api.pony.meta.Race mlpRace = ponyComponent.getData().getRace();
-                            this.overrideRace = convertMlpToUnicopia(mlpRace);
+                            NEPRace mlpRace = ponyComponent.getData().getRace();
+                            this.overrideRace = convertNepRaceToUnicopia(mlpRace);
                             this.needsRaceSync = false;
                         },
                         () -> {
@@ -82,7 +79,7 @@ public abstract class CreatureMixin extends Living<LivingEntity>  {
     }
 
     @Unique
-    private Race convertMlpToUnicopia(com.minelittlepony.api.pony.meta.Race mlpRace) {
+    private Race convertNepRaceToUnicopia(NEPRace mlpRace) {
         if (mlpRace.isHuman()) return Race.HUMAN;
         if (mlpRace.hasHorn() && mlpRace.hasWings()) return Race.ALICORN;
         if (mlpRace.hasHorn()) return Race.UNICORN;

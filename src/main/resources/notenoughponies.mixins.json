@@ -4,9 +4,6 @@
   "package": "com.neponies.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
-    "ConfigAccessor",
-    "CreatureMixin",
-    "PonyConfigMixin",
     "VillagerEntityMixin"
   ],
   "injectors": {

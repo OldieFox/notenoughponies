@@ -17,6 +17,9 @@ public class NEPoniesConfig {
     /** Toggle whether vanilla villager sounds are replaced with custom modded sounds */
     public static Setting<Boolean> isPonyVillagerSoundsEnabled;
 
+    /** Toggle whether vanilla villager ambient sounds (greetings) are played */
+    public static Setting<Boolean> isPonyVillagerAmbientSoundsEnabled;
+
 
     /** Setting from original MLP mod for replacing vanilla Minecraft villager sounds */
     private static Setting<Boolean> _isPonyVillagerInOriginalModEnabled;

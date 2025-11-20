@@ -29,7 +29,10 @@
 
   "mixins": [
     "notenoughponies.mixins.json",
-    "notenoughponies.client.mixins.json"
+    {
+      "config": "notenoughponies.client.mixins.json",
+      "environment": "client"
+    }
   ],
   "depends": {
     "minecraft": "~1.20.1"

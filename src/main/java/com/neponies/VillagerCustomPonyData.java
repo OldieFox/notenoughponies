@@ -1,6 +1,5 @@
 package com.neponies;
 
-import com.minelittlepony.api.pony.meta.Race;
 import net.minecraft.nbt.NbtCompound;
 import java.util.Objects;
 
@@ -31,7 +30,7 @@ public class VillagerCustomPonyData {
     // -------------------------
 
     private String skinID;
-    private Race race;
+    private NEPRace race;
     private String firstName;
     private String secondName;
 
@@ -39,10 +38,10 @@ public class VillagerCustomPonyData {
     // Constructors
     // -------------------------
     public VillagerCustomPonyData() {
-        this(null, Race.HUMAN, "", "");
+        this(null, NEPRace.HUMAN, "", "");
     }
 
-    public VillagerCustomPonyData(String skinID, Race race, String firstName, String secondName) {
+    public VillagerCustomPonyData(String skinID, NEPRace race, String firstName, String secondName) {
         this.skinID = skinID;
         this.race = race;
         this.firstName = firstName;
@@ -53,7 +52,7 @@ public class VillagerCustomPonyData {
     // Getters
     // -------------------------
     public String getSkinID() { return skinID; }
-    public Race getRace() { return race; }
+    public NEPRace getRace() { return race; }
     public String getFirstName() { return firstName; }
     public String getSecondName() { return secondName; }
 
@@ -62,7 +61,7 @@ public class VillagerCustomPonyData {
     // Setters
     // -------------------------
     public void setSkinID(String skinID) { this.skinID = skinID; }
-    public void setRace(Race race) { this.race = race; }
+    public void setRace(NEPRace race) { this.race = race; }
     public void setFirstName(String firstName) { this.firstName = firstName; }
     public void setSecondName(String secondName) { this.secondName = secondName; }
 
@@ -81,10 +80,10 @@ public class VillagerCustomPonyData {
         String skinId = tag.getString(Key.SKIN_ID.asString());
         if (skinId.isEmpty()) skinId = null;
 
-        Race race = Race.HUMAN; // Default to HUMAN if tag is missing to prevent crashes.
+        NEPRace race = NEPRace.HUMAN; // Default to HUMAN if tag is missing to prevent crashes.
         if (tag.contains(Key.RACE.asString())) {
             try {
-                race = Race.valueOf(tag.getString(Key.RACE.asString()));
+                race = NEPRace.valueOf(tag.getString(Key.RACE.asString()));
             } catch (IllegalArgumentException e) {
                 // Ignore invalid race string in NBT.
             }

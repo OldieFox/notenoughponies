@@ -1,6 +1,5 @@
 package com.neponies;
 
-import com.minelittlepony.api.pony.meta.Race;
 import dev.onyxstudios.cca.api.v3.component.Component;
 import dev.onyxstudios.cca.api.v3.component.sync.AutoSyncedComponent;
 import net.minecraft.nbt.NbtCompound;
@@ -16,7 +15,7 @@ public class PonyComponent implements Component, AutoSyncedComponent {
         this.data = data;
     }
 
-    public Race getRace() {
+    public NEPRace getRace() {
         return data.getRace();
     }
 

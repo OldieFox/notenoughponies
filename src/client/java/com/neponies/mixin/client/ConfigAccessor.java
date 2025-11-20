@@ -1,4 +1,4 @@
-package com.neponies.mixin;
+package com.neponies.mixin.client;
 
 import com.minelittlepony.common.util.settings.Config;
 import com.minelittlepony.common.util.settings.Setting;

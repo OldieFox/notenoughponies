@@ -3,6 +3,8 @@ package com.neponies.mixin.client;
 import com.minelittlepony.client.render.entity.npc.VillagerPonyRenderer;
 import com.neponies.MixinFlags;
 
+import com.neponies.NEPRace;
+import com.neponies.RaceConverter;
 import com.neponies.VillagerPonyEntityAccessor;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.util.math.MatrixStack;
@@ -10,6 +12,7 @@ import net.minecraft.entity.mob.MobEntity;
 
 import net.minecraft.entity.passive.VillagerEntity;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -24,7 +27,7 @@ public abstract class VillagerPonyRendererMixin {
     @Inject(method = "render", at = @At("HEAD"))
     private void beforeRender(MobEntity entity, float par2, float par3, MatrixStack par4, VertexConsumerProvider par5, int par6, CallbackInfo ci) {
         if (entity instanceof VillagerEntity villager && villager instanceof VillagerPonyEntityAccessor accessor) {
-            MixinFlags.overridenVillagerRace = accessor.getPonyRace();
+            MixinFlags.overridenVillagerRace = RaceConverter.toMLP(accessor.getPonyRace());
         }
     }
 

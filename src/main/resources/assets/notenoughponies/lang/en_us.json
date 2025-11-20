@@ -1,5 +1,6 @@
 {
   "minelp.options.ponycustomnamesenabled": "Pony Names",
   "minelp.options.professioninponycustomnames": "Show Profession",
-  "minelp.options.replacevillagersounds": "Villager Pony Sounds"
+  "minelp.options.replacevillagersounds": "Villager Pony Sounds",
+  "minelp.options.ponyvillagerambientsoundsenabled": "Villager Greeting Sounds"
 }

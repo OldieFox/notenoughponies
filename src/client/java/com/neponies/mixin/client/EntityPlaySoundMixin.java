@@ -11,6 +11,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import static com.neponies.NEPoniesConfig.isPonyVillagerInOriginalModEnabled;
 import static com.neponies.NEPoniesConfig.isPonyVillagerSoundsEnabled;
+import static com.neponies.NEPoniesConfig.isPonyVillagerAmbientSoundsEnabled;
 import static com.neponies.VillagerSounds.getVillagerSound;
 
 
@@ -25,20 +26,31 @@ public abstract class EntityPlaySoundMixin {
     @Inject(method = "playSound(Lnet/minecraft/sound/SoundEvent;FF)V", at = @At("HEAD"), cancellable = true)
     private void onPlaySound(SoundEvent sound, float volume, float pitch, CallbackInfo ci) {
 
-        if (!isPonyVillagerSoundsEnabled.get() || !isPonyVillagerInOriginalModEnabled().get()) return;
+        if (!isPonyVillagerInOriginalModEnabled().get()) return;
 
         Identifier id = Registries.SOUND_EVENT.getId(sound);
         if (id == null) return;
+
         if ("minecraft".equals(id.getNamespace()) && id.getPath().startsWith("entity.villager.")) {
-            SoundEvent replacement = getVillagerSound(id);
-            if (replacement != null && replacement != sound) {
-                // Custom sounds can be so irritating sometimes
-                float limitedPitch = pitch;
-                if ("entity.villager.ambient".equals(id.getPath())) {
-                    limitedPitch = Math.max(0.9f, Math.min(pitch, 1.15f));
-                }
+
+            // Mute ambient sounds if configured
+            if ("entity.villager.ambient".equals(id.getPath()) && !isPonyVillagerAmbientSoundsEnabled.get()) {
                 ci.cancel();
-                ((Entity)(Object)this).playSound(replacement, volume, limitedPitch);
+                return;
+            }
+
+            // Replace sounds if configured
+            if (isPonyVillagerSoundsEnabled.get()) {
+                SoundEvent replacement = getVillagerSound(id);
+                if (replacement != null && replacement != sound) {
+                    // Custom sounds can be so irritating sometimes
+                    float limitedPitch = pitch;
+                    if ("entity.villager.ambient".equals(id.getPath())) {
+                        limitedPitch = Math.max(0.9f, Math.min(pitch, 1.15f));
+                    }
+                    ci.cancel();
+                    ((Entity) (Object) this).playSound(replacement, volume, limitedPitch);
+                }
             }
         }
     }
