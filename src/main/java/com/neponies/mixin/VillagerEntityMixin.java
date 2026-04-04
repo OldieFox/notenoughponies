@@ -11,6 +11,7 @@ import net.minecraft.entity.passive.MerchantEntity;
 import net.minecraft.entity.passive.PassiveEntity;
 import net.minecraft.entity.passive.VillagerEntity;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.registry.Registries;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.text.Text;
 import net.minecraft.village.VillagerData;
@@ -82,14 +83,9 @@ public abstract class VillagerEntityMixin extends MerchantEntity implements Vill
     @Unique
     @Override
     public Text getProfessionName() {
-
-        String profession = getVillagerData().getProfession().toString();
-        if (profession.equalsIgnoreCase("none")) {
-            return Text.empty();
-        }
-
-        profession = upperFirstLetter(profession);
-        return Text.of(profession);
+        String professionKey = EntityType.VILLAGER.getTranslationKey() + "."
+                + Registries.VILLAGER_PROFESSION.getId(getVillagerData().getProfession()).getPath();
+        return Text.translatable(professionKey);
     }
 
     @Unique
@@ -239,13 +235,4 @@ public abstract class VillagerEntityMixin extends MerchantEntity implements Vill
             });
         }
     }
-
-
-    @Unique
-    private static String upperFirstLetter(String str) {
-        if (str == null || str.isEmpty()) return str;
-        return str.substring(0, 1).toUpperCase() + str.substring(1);
-    }
-
-
 }
