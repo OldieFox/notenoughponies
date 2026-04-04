@@ -14,6 +14,9 @@ public class NEPoniesConfig {
     /** Toggle displaying profession in the pony custom villager name */
     public static Setting<Boolean> isProfessionInPonyCustomNamesEnabled;
 
+    /** Toggle displaying profession level in the pony custom villager name */
+    public static Setting<Boolean> isProfessionLevelInPonyCustomNamesEnabled;
+
     /** Toggle whether vanilla villager sounds are replaced with custom modded sounds */
     public static Setting<Boolean> isPonyVillagerSoundsEnabled;
 

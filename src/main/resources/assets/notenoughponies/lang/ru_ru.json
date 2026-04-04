@@ -1,6 +1,7 @@
 {
   "minelp.options.ponycustomnamesenabled": "Пони имена",
   "minelp.options.professioninponycustomnames": "Показывать профессию",
+  "minelp.options.professionlevelinponycustomnames": "Показывать уровень профессии",
   "minelp.options.replacevillagersounds": "Звуки жителей-пони",
   "minelp.options.ponyvillagerambientsoundsenabled": "Звуки приветствия"
 }

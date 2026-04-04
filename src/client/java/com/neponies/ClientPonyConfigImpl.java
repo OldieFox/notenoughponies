@@ -2,7 +2,6 @@ package com.neponies.client;
 
 import com.neponies.NEPoniesConfig;
 import com.neponies.VillagerPonyEntityAccessor;
-import com.neponies.mixin.VillagerEntityMixin;
 import com.neponies.util.PonyConfigBridge;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.passive.VillagerEntity;
@@ -18,11 +17,9 @@ public class ClientPonyConfigImpl {
     }
 
     private static boolean canShowProfession(VillagerPonyEntityAccessor villager) {
-        if (!NEPoniesConfig.isProfessionInPonyCustomNamesEnabled.get()) return false;
         if (!NEPoniesConfig.isPonyVillagerInOriginalModEnabled().get()) return false;
 
-        Text profession = villager.getProfessionName();
-        return !profession.getString().isEmpty();
+        return !getProfessionLabel(villager).getString().isEmpty();
     }
 
     private static boolean canShowCustomName(VillagerPonyEntityAccessor accessor) {
@@ -38,5 +35,38 @@ public class ClientPonyConfigImpl {
         }
 
         return false;
+    }
+
+    public static Text getProfessionLabel(VillagerPonyEntityAccessor villager) {
+        boolean showProfession = NEPoniesConfig.isProfessionInPonyCustomNamesEnabled.get();
+        boolean showLevel = NEPoniesConfig.isProfessionLevelInPonyCustomNamesEnabled.get();
+
+        if (!showProfession && !showLevel) {
+            return Text.empty();
+        }
+
+        Text profession = villager.getProfessionName();
+        Text level = villager.getProfessionLevelName();
+        boolean hasProfession = !profession.getString().isEmpty();
+        boolean hasLevel = !level.getString().isEmpty();
+
+        if (showProfession && showLevel) {
+            if (hasProfession && hasLevel) {
+                return profession.copy().append(Text.literal(" - ")).append(level);
+            }
+            if (hasProfession) {
+                return profession;
+            }
+            if (hasLevel) {
+                return level;
+            }
+            return Text.empty();
+        }
+
+        if (showProfession) {
+            return hasProfession ? profession : Text.empty();
+        }
+
+        return hasLevel ? level : Text.empty();
     }
 }

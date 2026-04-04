@@ -15,6 +15,7 @@ import net.minecraft.registry.Registries;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.text.Text;
 import net.minecraft.village.VillagerData;
+import net.minecraft.village.VillagerProfession;
 import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
@@ -86,6 +87,23 @@ public abstract class VillagerEntityMixin extends MerchantEntity implements Vill
         String professionKey = EntityType.VILLAGER.getTranslationKey() + "."
                 + Registries.VILLAGER_PROFESSION.getId(getVillagerData().getProfession()).getPath();
         return Text.translatable(professionKey);
+    }
+
+    @Unique
+    @Override
+    public Text getProfessionLevelName() {
+        VillagerData villagerData = getVillagerData();
+        VillagerProfession profession = villagerData.getProfession();
+        int level = villagerData.getLevel();
+
+        if (profession == VillagerProfession.NONE || profession == VillagerProfession.NITWIT) {
+            return Text.empty();
+        }
+        if (level <= 0 || level > 5) {
+            return Text.empty();
+        }
+
+        return Text.translatable("merchant.level." + level);
     }
 
     @Unique
@@ -235,4 +253,6 @@ public abstract class VillagerEntityMixin extends MerchantEntity implements Vill
             });
         }
     }
+
+
 }

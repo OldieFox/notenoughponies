@@ -1,6 +1,7 @@
 package com.neponies.mixin.client;
 
 import com.minelittlepony.client.render.entity.AbstractPonyRenderer;
+import com.neponies.client.ClientPonyConfigImpl;
 import net.minecraft.client.render.entity.EntityRenderer;
 import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.entity.mob.MobEntity;
@@ -88,7 +89,10 @@ public abstract class AbstractPonyRendererMixin<T extends MobEntity>  extends En
             return;
         }
 
-        Text professionText = pony.getProfessionName();
+        Text professionText = ClientPonyConfigImpl.getProfessionLabel(pony);
+        if (professionText.getString().isEmpty()) {
+            return;
+        }
         stack.push();
         float scale = PROFESSION_LABEL_SCALE;
         stack.scale(scale, scale, scale);

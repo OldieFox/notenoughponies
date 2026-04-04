@@ -55,6 +55,10 @@ public class PonyConfigMixin extends Config {
                 .invokeValue("settings", "professionInPonyCustomNames", true)
                 .addComment("Toggle displaying profession in the pony custom villager name");
 
+        NEPoniesConfig.isProfessionLevelInPonyCustomNamesEnabled = ((ConfigAccessor) (Object) this)
+                .invokeValue("settings", "professionLevelInPonyCustomNames", false)
+                .addComment("Toggle displaying profession level in the pony custom villager label");
+
         NEPoniesConfig.isPonyVillagerSoundsEnabled = ((ConfigAccessor) (Object) this)
                 .invokeValue("settings", "replaceVillagerSounds", true)
                 .addComment("Toggle whether vanilla villager sounds are replaced with custom modded sounds");

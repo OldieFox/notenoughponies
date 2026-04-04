@@ -9,6 +9,7 @@ public interface VillagerPonyEntityAccessor {
     void setPonyRace(NEPRace race);
     Text getPonyCustomName();
     Text getProfessionName();
+    Text getProfessionLevelName();
     boolean canShowCustomPonyName();
     boolean canShowProfessionName();
     void setOnInitializeListener(Runnable listener);

@@ -1,6 +1,7 @@
 {
   "minelp.options.ponycustomnamesenabled": "小馬名稱",
   "minelp.options.professioninponycustomnames": "顯示職業",
+  "minelp.options.professionlevelinponycustomnames": "顯示職業等級",
   "minelp.options.replacevillagersounds": "村民小馬音效",
   "minelp.options.ponyvillagerambientsoundsenabled": "小馬環境音效"
 }
