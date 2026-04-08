@@ -18,6 +18,7 @@ public class ClientPonyConfigImpl {
 
     private static boolean canShowProfession(VillagerPonyEntityAccessor villager) {
         if (!NEPoniesConfig.isPonyVillagerInOriginalModEnabled().get()) return false;
+        if (villager instanceof VillagerEntity entity && entity.isBaby()) return false;
 
         return !getProfessionLabel(villager).getString().isEmpty();
     }
