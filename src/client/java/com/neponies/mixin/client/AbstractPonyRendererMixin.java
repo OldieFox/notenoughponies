@@ -21,6 +21,7 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Text;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 
@@ -75,6 +76,33 @@ public abstract class AbstractPonyRendererMixin<T extends MobEntity>  extends En
      * #A9X2QK
      * Render villager pony profession if enabled.
      */
+    @Inject(method = "renderLabelIfPresent", at = @At("HEAD"), cancellable = true)
+    private void renderProfessionOnlyLabel(T entity, Text name, MatrixStack stack,
+                                           VertexConsumerProvider renderContext, int maxDistance, CallbackInfo ci) {
+        if (!(entity instanceof VillagerEntity villager)) return;
+
+        VillagerPonyEntityAccessor pony = (VillagerPonyEntityAccessor) villager;
+        if (!shouldRenderProfessionOnly(villager, pony)) return;
+
+        MinecraftClient mc = MinecraftClient.getInstance();
+        if (mc.player == null || mc.player.squaredDistanceTo(entity) > RENDER_PROFESSION_RADIUS) {
+            return;
+        }
+
+        Text professionText = ClientPonyConfigImpl.getProfessionLabel(pony);
+        if (professionText.getString().isEmpty()) {
+            return;
+        }
+
+        stack.push();
+        float scale = PROFESSION_LABEL_SCALE * (villager.isBaby() ? BABY_LABEL_SCALE : 1.0f);
+        stack.scale(scale, scale, scale);
+        stack.translate(0, PROFESSION_Y_OFFSET, 0);
+        super.renderLabelIfPresent(entity, professionText, stack, renderContext, maxDistance);
+        stack.pop();
+        ci.cancel();
+    }
+
     @Inject(method = "renderLabelIfPresent", at = @At("RETURN"), cancellable = true)
     private void renderProfessionLabel(T entity, Text name, MatrixStack stack,
                                        VertexConsumerProvider renderContext, int maxDistance, CallbackInfo ci) {
@@ -84,6 +112,7 @@ public abstract class AbstractPonyRendererMixin<T extends MobEntity>  extends En
         if (!pony.canShowProfessionName()) return;
 
         MinecraftClient mc = MinecraftClient.getInstance();
+        if (mc.player == null) return;
 
         if (mc.player.squaredDistanceTo(entity) > RENDER_PROFESSION_RADIUS){
             return;
@@ -102,5 +131,11 @@ public abstract class AbstractPonyRendererMixin<T extends MobEntity>  extends En
         stack.pop();
     }
 
+    @Unique
+    private boolean shouldRenderProfessionOnly(VillagerEntity villager, VillagerPonyEntityAccessor pony) {
+        return pony.canShowProfessionName()
+                && !pony.canShowCustomPonyName()
+                && !villager.hasCustomName();
+    }
 
 }

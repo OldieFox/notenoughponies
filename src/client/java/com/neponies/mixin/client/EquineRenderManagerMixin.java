@@ -28,10 +28,12 @@ public abstract class EquineRenderManagerMixin<T extends LivingEntity> {
             cir.setReturnValue(cir.getReturnValue() + 0.65);
         }
         MinecraftClient mc = MinecraftClient.getInstance();
+        if (mc.player == null) return;
 
         if (mc.player.squaredDistanceTo(entity) <= RENDER_PROFESSION_RADIUS
                 && entity instanceof VillagerPonyEntityAccessor villager
-                && villager.canShowProfessionName()) {
+                && villager.canShowProfessionName()
+                && entity.hasCustomName()) {
 
             cir.setReturnValue(cir.getReturnValue() + NAME_WITH_PROFESSION_Y_OFFSET);
         }

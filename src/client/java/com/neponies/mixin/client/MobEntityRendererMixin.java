@@ -1,6 +1,5 @@
 package com.neponies.mixin.client;
 
-import com.minelittlepony.api.config.PonyConfig;
 import com.neponies.VillagerPonyEntityAccessor;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.entity.MobEntityRenderer;
@@ -12,7 +11,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import static com.neponies.NEPoniesConfig.isPonyCustomNamesEnabled;
+import static com.neponies.Constants.RENDER_PROFESSION_RADIUS;
 
 @Mixin(MobEntityRenderer.class)
 public abstract class MobEntityRendererMixin<T extends MobEntity, M extends EntityModel<T>> {
@@ -29,9 +28,18 @@ public abstract class MobEntityRendererMixin<T extends MobEntity, M extends Enti
 
         VillagerPonyEntityAccessor pony = (VillagerPonyEntityAccessor) villager;
 
-        if (!isPonyCustomNamesEnabled.get()) return;
-
         MinecraftClient client = MinecraftClient.getInstance();
+        if (client.player == null) {
+            cir.setReturnValue(false);
+            return;
+        }
+
+        boolean showCustomName = pony.canShowCustomPonyName();
+        boolean showProfession = pony.canShowProfessionName()
+                && client.player.squaredDistanceTo(entity) <= RENDER_PROFESSION_RADIUS;
+
+        if (!showCustomName && !showProfession) return;
+
         boolean canShow = client.player != null && client.player.canSee(entity);
 
         cir.setReturnValue(canShow);
