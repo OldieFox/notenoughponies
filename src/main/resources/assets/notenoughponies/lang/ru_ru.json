@@ -2,6 +2,10 @@
   "minelp.options.ponycustomnamesenabled": "Пони имена",
   "minelp.options.professioninponycustomnames": "Показывать профессию",
   "minelp.options.professionlevelinponycustomnames": "Показывать уровень профессии",
+  "minelp.options.ponycustomnamerenderdistance": "Дальность имён пони: %s блоков",
+  "minelp.options.ponycustomnamerenderdistance.tooltip": "Максимальная дистанция в блоках для отображения имён жителей-пони",
+  "minelp.options.professionrenderdistance": "Дальность профессии: %s блоков",
+  "minelp.options.professionrenderdistance.tooltip": "Максимальная дистанция в блоках для отображения профессии жителя и уровня профессии",
   "minelp.options.replacevillagersounds": "Звуки жителей-пони",
   "minelp.options.ponyvillagerambientsoundsenabled": "Звуки приветствия"
 }

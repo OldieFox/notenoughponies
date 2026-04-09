@@ -2,6 +2,10 @@
   "minelp.options.ponycustomnamesenabled": "Pony Monikers",
   "minelp.options.professioninponycustomnames": "Show Yer Trade",
   "minelp.options.professionlevelinponycustomnames": "Show Yer Rank",
+  "minelp.options.ponycustomnamerenderdistance": "Pony Moniker Distance: %s blocks",
+  "minelp.options.ponycustomnamerenderdistance.tooltip": "Maximum distance in blocks fer displayin' villager pony names",
+  "minelp.options.professionrenderdistance": "Trade Distance: %s blocks",
+  "minelp.options.professionrenderdistance.tooltip": "Maximum distance in blocks fer displayin' villager trades and ranks",
   "minelp.options.replacevillagersounds": "Villager Pony Squawks",
   "minelp.options.ponyvillagerambientsoundsenabled": "Pony Chatter"
 }

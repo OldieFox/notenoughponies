@@ -2,6 +2,10 @@
   "minelp.options.ponycustomnamesenabled": "Noms des poneys",
   "minelp.options.professioninponycustomnames": "Afficher la profession",
   "minelp.options.professionlevelinponycustomnames": "Afficher le niveau de profession",
+  "minelp.options.ponycustomnamerenderdistance": "Distance des noms de poneys : %s blocs",
+  "minelp.options.ponycustomnamerenderdistance.tooltip": "Distance maximale en blocs pour afficher les noms des villageois poneys",
+  "minelp.options.professionrenderdistance": "Distance de la profession : %s blocs",
+  "minelp.options.professionrenderdistance.tooltip": "Distance maximale en blocs pour afficher la profession et le niveau de profession des villageois",
   "minelp.options.replacevillagersounds": "Sons de poney des villageois",
   "minelp.options.ponyvillagerambientsoundsenabled": "Sons ambiants des poneys"
 }

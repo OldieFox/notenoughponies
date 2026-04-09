@@ -21,7 +21,6 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Text;
-import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 
@@ -82,10 +81,15 @@ public abstract class AbstractPonyRendererMixin<T extends MobEntity>  extends En
         if (!(entity instanceof VillagerEntity villager)) return;
 
         VillagerPonyEntityAccessor pony = (VillagerPonyEntityAccessor) villager;
-        if (!shouldRenderProfessionOnly(villager, pony)) return;
 
         MinecraftClient mc = MinecraftClient.getInstance();
-        if (mc.player == null || mc.player.squaredDistanceTo(entity) > RENDER_PROFESSION_RADIUS) {
+        if (mc.player == null) {
+            return;
+        }
+
+        if (!pony.canShowProfessionName()
+                || ClientPonyConfigImpl.hasVisibleNameLabel(villager, pony, mc.player)
+                || !ClientPonyConfigImpl.isWithinProfessionDistance(mc.player, entity)) {
             return;
         }
 
@@ -114,7 +118,8 @@ public abstract class AbstractPonyRendererMixin<T extends MobEntity>  extends En
         MinecraftClient mc = MinecraftClient.getInstance();
         if (mc.player == null) return;
 
-        if (mc.player.squaredDistanceTo(entity) > RENDER_PROFESSION_RADIUS){
+        if (!ClientPonyConfigImpl.hasVisibleNameLabel(villager, pony, mc.player)
+                || !ClientPonyConfigImpl.isWithinProfessionDistance(mc.player, entity)) {
             return;
         }
 
@@ -129,13 +134,6 @@ public abstract class AbstractPonyRendererMixin<T extends MobEntity>  extends En
         stack.translate(0, PROFESSION_Y_OFFSET, 0);
         super.renderLabelIfPresent(entity, professionText, stack, renderContext, maxDistance);
         stack.pop();
-    }
-
-    @Unique
-    private boolean shouldRenderProfessionOnly(VillagerEntity villager, VillagerPonyEntityAccessor pony) {
-        return pony.canShowProfessionName()
-                && !pony.canShowCustomPonyName()
-                && !villager.hasCustomName();
     }
 
 }

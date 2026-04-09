@@ -2,6 +2,10 @@
   "minelp.options.ponycustomnamesenabled": "小馬名稱",
   "minelp.options.professioninponycustomnames": "顯示職業",
   "minelp.options.professionlevelinponycustomnames": "顯示職業等級",
+  "minelp.options.ponycustomnamerenderdistance": "小馬名字顯示距離：%s 格",
+  "minelp.options.ponycustomnamerenderdistance.tooltip": "顯示村民小馬名字的最大距離（方塊）",
+  "minelp.options.professionrenderdistance": "職業顯示距離：%s 格",
+  "minelp.options.professionrenderdistance.tooltip": "顯示村民職業與職業等級的最大距離（方塊）",
   "minelp.options.replacevillagersounds": "村民小馬音效",
   "minelp.options.ponyvillagerambientsoundsenabled": "小馬環境音效"
 }

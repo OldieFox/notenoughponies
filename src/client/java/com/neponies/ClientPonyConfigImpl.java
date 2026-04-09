@@ -16,6 +16,30 @@ public class ClientPonyConfigImpl {
         PonyConfigBridge.CAN_SHOW_CUSTOM_NAME = ClientPonyConfigImpl::canShowCustomName;
     }
 
+    public static int getCustomNameRenderDistance() {
+        return NEPoniesConfig.getPonyCustomNameRenderDistance();
+    }
+
+    public static int getProfessionRenderDistance() {
+        return NEPoniesConfig.getProfessionRenderDistance();
+    }
+
+    public static boolean isWithinCustomNameDistance(Entity viewer, Entity entity) {
+        return viewer.squaredDistanceTo(entity) <= squareDistance(getCustomNameRenderDistance());
+    }
+
+    public static boolean isWithinProfessionDistance(Entity viewer, Entity entity) {
+        return viewer.squaredDistanceTo(entity) <= squareDistance(getProfessionRenderDistance());
+    }
+
+    public static boolean hasVisibleNameLabel(VillagerEntity villager, VillagerPonyEntityAccessor pony, Entity viewer) {
+        if (viewer == null || !isWithinCustomNameDistance(viewer, villager)) {
+            return false;
+        }
+
+        return pony.canShowCustomPonyName() || villager.hasCustomName();
+    }
+
     private static boolean canShowProfession(VillagerPonyEntityAccessor villager) {
         if (!NEPoniesConfig.isPonyVillagerInOriginalModEnabled().get()) return false;
         if (villager instanceof VillagerEntity entity && entity.isBaby()) return false;
@@ -69,5 +93,9 @@ public class ClientPonyConfigImpl {
         }
 
         return hasLevel ? level : Text.empty();
+    }
+
+    private static double squareDistance(int distance) {
+        return (double) distance * distance;
     }
 }

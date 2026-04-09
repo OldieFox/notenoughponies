@@ -23,6 +23,12 @@ public class NEPoniesConfig {
     /** Toggle whether vanilla villager ambient sounds (greetings) are played */
     public static Setting<Boolean> isPonyVillagerAmbientSoundsEnabled;
 
+    /** Maximum distance in blocks for displaying pony villager names */
+    public static Setting<Integer> ponyCustomNameRenderDistance;
+
+    /** Maximum distance in blocks for displaying villager professions */
+    public static Setting<Integer> professionRenderDistance;
+
 
     /** Setting from original MLP mod for replacing vanilla Minecraft villager sounds */
     private static Setting<Boolean> _isPonyVillagerInOriginalModEnabled;
@@ -39,6 +45,40 @@ public class NEPoniesConfig {
                     .orElseThrow(() -> new IllegalStateException("Villager setting not found in MLP config"));
         }
         return _isPonyVillagerInOriginalModEnabled;
+    }
+
+    public static int getPonyCustomNameRenderDistance() {
+        return getClampedDistance(ponyCustomNameRenderDistance, Constants.DEFAULT_NAME_RENDER_DISTANCE);
+    }
+
+    public static int setPonyCustomNameRenderDistance(int distance) {
+        return setClampedDistance(ponyCustomNameRenderDistance, distance);
+    }
+
+    public static int getProfessionRenderDistance() {
+        return getClampedDistance(professionRenderDistance, Constants.DEFAULT_PROFESSION_RENDER_DISTANCE);
+    }
+
+    public static int setProfessionRenderDistance(int distance) {
+        return setClampedDistance(professionRenderDistance, distance);
+    }
+
+    private static int getClampedDistance(Setting<Integer> setting, int defaultValue) {
+        int value = setting == null ? defaultValue : setting.get();
+        return clampDistance(value);
+    }
+
+    private static int setClampedDistance(Setting<Integer> setting, int distance) {
+        int clamped = clampDistance(distance);
+        if (setting != null) {
+            setting.set(clamped);
+        }
+        return clamped;
+    }
+
+    private static int clampDistance(int distance) {
+        return Math.max(Constants.MIN_LABEL_RENDER_DISTANCE,
+                Math.min(Constants.MAX_LABEL_RENDER_DISTANCE, distance));
     }
 
 

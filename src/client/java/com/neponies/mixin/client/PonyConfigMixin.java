@@ -3,6 +3,7 @@ package com.neponies.mixin.client;
 import com.minelittlepony.api.config.PonyConfig;
 import com.minelittlepony.api.pony.meta.Race;
 import com.minelittlepony.common.util.settings.Config;
+import com.neponies.Constants;
 import com.neponies.MixinFlags;
 import com.neponies.NEPoniesConfig;
 import org.spongepowered.asm.mixin.Mixin;
@@ -58,6 +59,14 @@ public class PonyConfigMixin extends Config {
         NEPoniesConfig.isProfessionLevelInPonyCustomNamesEnabled = ((ConfigAccessor) (Object) this)
                 .invokeValue("settings", "professionLevelInPonyCustomNames", false)
                 .addComment("Toggle displaying profession level in the pony custom villager label");
+
+        NEPoniesConfig.ponyCustomNameRenderDistance = ((ConfigAccessor) (Object) this)
+                .invokeValue("settings", "ponyCustomNameRenderDistance", Constants.DEFAULT_NAME_RENDER_DISTANCE)
+                .addComment("Maximum distance in blocks for displaying pony villager names");
+
+        NEPoniesConfig.professionRenderDistance = ((ConfigAccessor) (Object) this)
+                .invokeValue("settings", "professionRenderDistance", Constants.DEFAULT_PROFESSION_RENDER_DISTANCE)
+                .addComment("Maximum distance in blocks for displaying villager professions and levels");
 
         NEPoniesConfig.isPonyVillagerSoundsEnabled = ((ConfigAccessor) (Object) this)
                 .invokeValue("settings", "replaceVillagerSounds", true)

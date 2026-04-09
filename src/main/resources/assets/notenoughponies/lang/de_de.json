@@ -2,6 +2,10 @@
   "minelp.options.ponycustomnamesenabled": "Pony-Namen",
   "minelp.options.professioninponycustomnames": "Beruf anzeigen",
   "minelp.options.professionlevelinponycustomnames": "Berufsstufe anzeigen",
+  "minelp.options.ponycustomnamerenderdistance": "Pony-Namensdistanz: %s Blöcke",
+  "minelp.options.ponycustomnamerenderdistance.tooltip": "Maximale Entfernung in Blöcken, bis zu der Pony-Namen von Dorfbewohnern angezeigt werden",
+  "minelp.options.professionrenderdistance": "Berufsdistanz: %s Blöcke",
+  "minelp.options.professionrenderdistance.tooltip": "Maximale Entfernung in Blöcken, bis zu der Berufe und Berufsstufen von Dorfbewohnern angezeigt werden",
   "minelp.options.replacevillagersounds": "Dorfbewohner-Pony-Geräusche",
   "minelp.options.ponyvillagerambientsoundsenabled": "Pony-Umgebungsgeräusche"
 }

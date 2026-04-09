@@ -2,15 +2,16 @@ package com.neponies.mixin.client;
 
 import com.minelittlepony.client.render.EquineRenderManager;
 import com.neponies.VillagerPonyEntityAccessor;
+import com.neponies.client.ClientPonyConfigImpl;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.passive.VillagerEntity;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import static com.neponies.Constants.NAME_WITH_PROFESSION_Y_OFFSET;
-import static com.neponies.Constants.RENDER_PROFESSION_RADIUS;
 
 @Mixin(EquineRenderManager.class)
 public abstract class EquineRenderManagerMixin<T extends LivingEntity> {
@@ -30,10 +31,11 @@ public abstract class EquineRenderManagerMixin<T extends LivingEntity> {
         MinecraftClient mc = MinecraftClient.getInstance();
         if (mc.player == null) return;
 
-        if (mc.player.squaredDistanceTo(entity) <= RENDER_PROFESSION_RADIUS
+        if (entity instanceof VillagerEntity villagerEntity
                 && entity instanceof VillagerPonyEntityAccessor villager
+                && ClientPonyConfigImpl.isWithinProfessionDistance(mc.player, entity)
                 && villager.canShowProfessionName()
-                && entity.hasCustomName()) {
+                && ClientPonyConfigImpl.hasVisibleNameLabel(villagerEntity, villager, mc.player)) {
 
             cir.setReturnValue(cir.getReturnValue() + NAME_WITH_PROFESSION_Y_OFFSET);
         }
