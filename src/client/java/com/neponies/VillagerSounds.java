@@ -1,5 +1,6 @@
 package com.neponies;
 
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.sound.SoundEvent;
@@ -18,6 +19,9 @@ public class VillagerSounds {
 
     private static final Logger logger = LoggerFactory.getLogger("notenoughponies");
     public static final String MOD_ID = "notenoughponies";
+    private static final String DEFAULT_SOUND_VARIANT = "nep";
+    private static final String RUSSIAN_SOUND_VARIANT = "nep_ru_ru";
+    private static final String RUSSIAN_LANGUAGE_CODE = "ru_ru";
 
     // List of vanilla sound suffixes to replace
     public static final Set<String> REPLACED_VILLAGER_SOUND_EVENTS = Set.of(
@@ -32,9 +36,8 @@ public class VillagerSounds {
      */
     public static void registerVillagerSounds() {
         for (String eventName : REPLACED_VILLAGER_SOUND_EVENTS) {
-            Identifier id = new Identifier(MOD_ID, "entity.villager." + eventName + ".nep");
-            Registry.register(Registries.SOUND_EVENT, id, SoundEvent.of(id));
-            VILLAGERS_SOUNDS.add(id);
+            registerVillagerSound(eventName, DEFAULT_SOUND_VARIANT);
+            registerVillagerSound(eventName, RUSSIAN_SOUND_VARIANT);
         }
         logger.info("Registered {} custom villager sound events.", VILLAGERS_SOUNDS.size());
     }
@@ -56,11 +59,31 @@ public class VillagerSounds {
 
         String suffix = path.substring("entity.villager.".length());
         if (REPLACED_VILLAGER_SOUND_EVENTS.contains(suffix)) {
-            Identifier nepId = new Identifier(MOD_ID, "entity.villager." + suffix + ".nep");
+            Identifier nepId = getReplacementSoundId(suffix);
             return Registries.SOUND_EVENT.getOrEmpty(nepId)
                     .orElse(Registries.SOUND_EVENT.get(originalId));
         }
 
         return Registries.SOUND_EVENT.get(originalId);
+    }
+
+    private static void registerVillagerSound(String eventName, String variant) {
+        Identifier id = new Identifier(MOD_ID, "entity.villager." + eventName + "." + variant);
+        Registry.register(Registries.SOUND_EVENT, id, SoundEvent.of(id));
+        VILLAGERS_SOUNDS.add(id);
+    }
+
+    private static Identifier getReplacementSoundId(String suffix) {
+        String variant = isRussianClientLanguage() ? RUSSIAN_SOUND_VARIANT : DEFAULT_SOUND_VARIANT;
+        return new Identifier(MOD_ID, "entity.villager." + suffix + "." + variant);
+    }
+
+    private static boolean isRussianClientLanguage() {
+        MinecraftClient client = MinecraftClient.getInstance();
+        if (client == null) {
+            return false;
+        }
+
+        return RUSSIAN_LANGUAGE_CODE.equalsIgnoreCase(client.getLanguageManager().getLanguage());
     }
 }

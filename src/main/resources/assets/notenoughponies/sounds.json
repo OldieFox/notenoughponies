@@ -44,5 +44,51 @@
       "notenoughponies:mob/villager/nep_no2",
       "notenoughponies:mob/villager/nep_no3"
     ]
+  },
+  "entity.villager.ambient.nep_ru_ru": {
+    "subtitle": "subtitles.notenoughponies.villager.ambient",
+    "sounds": [
+      "notenoughponies:mob/villager_ru_ru/idle2",
+      "notenoughponies:mob/villager_ru_ru/idle3"
+    ]
+  },
+  "entity.villager.death.nep_ru_ru": {
+    "subtitle": "subtitles.notenoughponies.villager.death",
+    "sounds": [
+      "notenoughponies:mob/villager_ru_ru/death"
+    ]
+  },
+  "entity.villager.hurt.nep_ru_ru": {
+    "subtitle": "subtitles.notenoughponies.villager.hurt",
+    "sounds": [
+      "notenoughponies:mob/villager_ru_ru/hit1",
+      "notenoughponies:mob/villager_ru_ru/hit2",
+      "notenoughponies:mob/villager_ru_ru/hit3",
+      "notenoughponies:mob/villager_ru_ru/hit4"
+    ]
+  },
+  "entity.villager.trade.nep_ru_ru": {
+    "subtitle": "subtitles.notenoughponies.villager.trade",
+    "sounds": [
+      "notenoughponies:mob/villager_ru_ru/haggle1",
+      "notenoughponies:mob/villager_ru_ru/haggle2",
+      "notenoughponies:mob/villager_ru_ru/haggle3"
+    ]
+  },
+  "entity.villager.yes.nep_ru_ru": {
+    "subtitle": "subtitles.notenoughponies.villager.yes",
+    "sounds": [
+      "notenoughponies:mob/villager_ru_ru/yes1",
+      "notenoughponies:mob/villager_ru_ru/yes2",
+      "notenoughponies:mob/villager_ru_ru/yes3"
+    ]
+  },
+  "entity.villager.no.nep_ru_ru": {
+    "subtitle": "subtitles.notenoughponies.villager.no",
+    "sounds": [
+      "notenoughponies:mob/villager_ru_ru/no1",
+      "notenoughponies:mob/villager_ru_ru/no2",
+      "notenoughponies:mob/villager_ru_ru/no3"
+    ]
   }
 }
